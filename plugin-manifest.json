@@ -1,9 +1,9 @@
 {
-  "id": "flotiq.multilingual",
-  "name": "Multilingual plugin",
-  "description": "Multilingual Plugin is an advanced plugin that allows easy addition and management of translations while editing objects. It supports multiple languages and enables users to define and manage their own language sets.",
-  "version": "0.2.0",
-  "repository": "https://github.com/flotiq/flotiq-ui-plugin-multilingual",
+  "id": "flotiq.translation-deepl",
+  "name": "DeepL Translation plugin",
+  "description": "Use DeepL to translate your content. This plugin requires the Flotiq Multilingual plugin.",
+  "version": "0.1.1",
+  "repository": "https://github.com/flotiq/flotiq-ui-plugin-deepl",
   "url": "https://localhost:3053/index.js",
   "permissions": [
     {
@@ -13,7 +13,6 @@
     },
     {
       "ctdName": "*",
-      "canUpdate": true,
       "canRead": true,
       "type": "CTD"
     }

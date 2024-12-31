@@ -3,6 +3,7 @@ import { handleCoFormConfig } from "./co-form";
 import { handlePluginFormConfig } from "./plugin-form";
 
 export const handleFormFieldConfig = (data, getPluginSettings) => {
+  // TODO: clarify if we need this
   if (
     data.contentType?.id === pluginInfo.id &&
     data.contentType?.nonCtdSchema &&

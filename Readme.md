@@ -1,67 +1,25 @@
 [[_TOC_]]
 
-# Multilingual Plugin
+# DeepL Translation Plugin
 
 ## Overview
-Multilingual Plugin is an advanced plugin that allows easy addition and management of translations while editing objects. It supports multiple languages and enables users to define and manage their own language sets.
+This plugin provides automated translation using the DeepL API. It requires that the [Multilingual plugin](https://github.com/flotiq/flotiq-ui-plugin-multilingual) is installed and configured. It supports multiple languages and enables users to define and manage their own language sets.
 
 ## Configuration Steps
 
-1. First, select the Content Type.
-2. After selecting the Content Type, choose the fields that will be translated. If any field is not selected for translations, it will be disabled on the tab for another language.
-3. Add at least two languages and select the default language.
-4. After saving the settings, the Content Type is modified and a `__translations` field is added, containing an array of available translations. The translation language is available under the `__language` field in each `__translations` item.
+1. Go to your Flotiq UI and select `Plugins` from the left side menu.
+2. Find the `DeepL translation plugin` and enable it, wait for the UI to reload.
+3. Click `Manage` and then `Add item` in the configuration window.
+4. Select the Content Type, where you want to configure the plugin.
+5. Next select the fields, that will be translated. Only text and rich-text fields are supported for now.
+6. Enter the list of available languages, including the original one (the one which you will use to enter the content). Please use 2-letter language codes, [as supported by DeepL](https://developers.deepl.com/docs/resources/supported-languages).
+7. Select the original language in the `Default language` field.
 
-<img src=".docs/configuration.png" alt="Multilingual plugin configuration" width="700"/>
+## Using the plugin
 
-## Special Fields
-
-* `__translations`: Contains an array of translations, excluding the default language, whose data is found in the object fields.
-* `__language`: Specifies the translation language.
-
-If a field is not selected for translations, it will not be visible in the __translations field and will only be available in the basic fields of the object for the default language.
-
-> Warning! The __translations field should not be manually modified. After each change in the content type for translated fields, go to the plugin settings and save them again to properly update the translation fields.
-
-## Plugin Usage
-
-* When adding/editing an object, tabs with the previously selected languages will be available. The default language is always in the first tab.
-* Clicking on another language tab will add the translated fields, populated with the current fields in the default language.
-* If we return to the default language tab, make changes, and go back to another language tab, the previously filled fields will not be overwritten.
-
-<img src=".docs/default-lng.png" alt="Default language tab" width="400"/>
-<img src=".docs/translation-lng.png" alt="Translation language tab" width="400"/>
-
-## Removing Content Type from plugin settings
-
-When removing the content type from the settings, you will be asked whether to keep the translations or remove them:
-
-* Removing: Modifies the content type, removes the `__translations` field, and deletes the collected data.
-* Keeping: If you choose the "Keep translation fields" option, you can remove `__translations` field later manually by editing the content type.
-
-## Example object
-
-Let's assume you have an object with `title` and `slug` fields. Before applying translations, your object will look like:
-
-```json
-{
-   "title": "My first blog post",
-   "slug": "my-first-blog-post"
-}
-```
-
-Now, let's consider you are adding two languages: `pl` and `en`, and your default language is `en`. You are choosing the `title` field to translate. After applying translations, the object will be:
-
-```json
-{
-   "title": "My first blog post",
-   "slug": "my-first-blog-post",
-   "__translations": [{
-      "__language": "pl",
-      "title": "Mój pierwszy post na blogu"
-   }]
-}
-```
+1. Once the plugin is configured - go to the configured Content Type and edit one of the objects. 
+2. There will be a magic icon displayed next to the first field of the form - once you're done entering your content and you want to translate - click on it.
+3. You can now browse to the other language tabs to see your translated content!
 
 ## Development
 

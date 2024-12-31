@@ -1,95 +1,41 @@
-import { formLng } from "../../form-add";
+import {
+  addElementToCache,
+  getCachedElement,
+} from "../../../common/plugin-element-cache";
+import pluginInfo from "../../../plugin-manifest.json";
+import { createTranslateButton } from "./button";
 
-const errorClass = "plugin-multilingual-tab__item--error";
-
-const toggleErrorOnTab = (lng, error) => {
-  const lngItem = document
-    .querySelector(".plugin-multilingual-tabs")
-    ?.querySelector(`.plugin-multilingual-tab__item[data-language=${lng}]`);
-
-  if (!lngItem) return;
-
-  if (error) {
-    lngItem.classList.add(errorClass);
-  } else {
-    lngItem.classList.remove(errorClass);
-  }
-};
-
-const hasDefaultErrors = (formik) =>
-  Object.keys(formik.errors).filter((name) => name !== "__translations")
-    ?.length && formik.touched?.__translations;
-
-export const fieldDictionary = { current: null };
-
-export const handleCoFormConfig = async (
-  { name, config, formik, contentType },
+/**
+ * Add the translate button to
+ * @param {*} param0
+ * @param {*} contentTypeSettings
+ */
+export const handleCoFormConfig = (
+  { contentType, name, config, formik },
   contentTypeSettings,
 ) => {
-  if (!contentType.metaDefinition?.propertiesConfig?.__translations) return;
+  // Add the Magic Button on first field in the form
+  if (name == contentType.metaDefinition?.order[0]) {
+    const cacheKey = `${pluginInfo.id}-${contentType.name}-${name}`;
+    const cacheEntry = getCachedElement(cacheKey);
 
-  config.key = `${formLng.current}-${name}`;
+    let button = null;
 
-  const defaultHasErrors = hasDefaultErrors(formik);
-  toggleErrorOnTab(contentTypeSettings.default_language, defaultHasErrors);
-
-  (formik.values.__translations || []).forEach(({ __language }, idx) => {
-    toggleErrorOnTab(__language, !!formik.errors?.__translations?.[idx]);
-  });
-
-  if (
-    !formLng.current ||
-    formLng.current === contentTypeSettings.default_language
-  ) {
-    return;
-  }
-
-  if (!fieldDictionary.current) {
-    fieldDictionary.current = contentTypeSettings.fields.reduce(
-      (acc, field) => {
-        acc[field] = true;
-        return acc;
-      },
-      {},
-    );
-  }
-
-  const isInTranlsations = fieldDictionary.current[name];
-
-  if (!isInTranlsations) {
-    const { listName } = name.match(/(?<listName>\w+)\[(\d+)\]/)?.groups || {};
-
-    if (listName) {
-      const listInTranlsation = fieldDictionary.current[listName];
-      if (listInTranlsation) return;
-    }
-
-    config.disabled = true;
-    return;
-  }
-
-  const translationIndex = formik.values.__translations?.findIndex(
-    ({ __language }) => __language === formLng.current,
-  );
-
-  const lngIndex =
-    translationIndex > -1
-      ? translationIndex
-      : formik.values.__translations.length;
-
-  const fieldName = `__translations.[${lngIndex}].${name}`;
-
-  if (fieldName !== config.name) {
-    config.name = fieldName;
-
-    const value = formik.values.__translations?.[lngIndex]?.[name];
-    if ("checked" in config) {
-      config.checked = value;
+    if (cacheEntry) {
+      // Update cache entry with new formik data
+      cacheEntry.data.formik = formik;
+      button = cacheEntry.element;
     } else {
-      config.value = value;
+      const buttonData = {
+        settings: contentTypeSettings,
+        formik,
+        contentType,
+      };
+
+      button = createTranslateButton(buttonData);
+      addElementToCache(button, cacheKey, buttonData);
     }
 
-    const error = formik.errors.__translations?.[lngIndex]?.[name];
-    config.error = error;
+    config.additionalElements = [button];
   }
 };

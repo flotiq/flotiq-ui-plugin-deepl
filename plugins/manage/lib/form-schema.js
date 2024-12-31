@@ -21,12 +21,17 @@ export const getSchema = (contentTypes) => ({
             items: {
               type: "object",
               required: [
+                "api_key",
                 "languages",
                 "fields",
                 "content_type",
                 "default_language",
               ],
               properties: {
+                api_key: {
+                  type: "string",
+                  minLength: 1,
+                },
                 fields: {
                   type: "array",
                   items: {
@@ -63,8 +68,20 @@ export const getSchema = (contentTypes) => ({
     propertiesConfig: {
       config: {
         items: {
-          order: ["content_type", "fields", "languages", "default_language"],
+          order: [
+            "api_key",
+            "content_type",
+            "fields",
+            "languages",
+            "default_language",
+          ],
           propertiesConfig: {
+            api_key: {
+              label: i18n.t("DeepL API Key"),
+              unique: false,
+              helpText: "",
+              inputType: "text",
+            },
             fields: {
               label: i18n.t("Fields"),
               unique: false,

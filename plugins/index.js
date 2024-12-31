@@ -3,9 +3,10 @@ import pluginInfo from "../plugin-manifest.json";
 import cssString from "inline:./styles/style.css";
 import { handleManageSchema } from "./manage";
 import { handleFormFieldConfig } from "./form-config";
-import { handleFormFieldAdd } from "./form-add";
-import { handleRemovedEvent } from "./plugin-removed";
-import { fieldDictionary } from "./form-config/co-form";
+
+/**
+ * Register the plugin
+ */
 
 registerFn(pluginInfo, (handler, client, globals) => {
   /**
@@ -18,23 +19,17 @@ registerFn(pluginInfo, (handler, client, globals) => {
     document.head.appendChild(style);
   }
 
-  handler.on("flotiq.form.field::config", (data) =>
-    handleFormFieldConfig(data, globals.getPluginSettings),
-  );
-
-  handler.on("flotiq.form::add", (data) =>
-    handleFormFieldAdd(data, globals.getPluginSettings),
-  );
-
+  /**
+   * Plugin configuration
+   */
   handler.on("flotiq.plugins.manage::form-schema", (data) =>
     handleManageSchema(data, client, globals),
   );
 
-  handler.on("flotiq.plugin::removed", () =>
-    handleRemovedEvent(client, globals),
+  /**
+   * Extend the Content Object forms
+   */
+  handler.on("flotiq.form.field::config", (data) =>
+    handleFormFieldConfig(data, globals.getPluginSettings),
   );
-
-  handler.on("flotiq.plugin.settings::changed", () => {
-    fieldDictionary.current = null;
-  });
 });
