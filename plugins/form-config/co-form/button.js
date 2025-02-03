@@ -1,30 +1,29 @@
-import { generateTranslation } from "./generate-translation";
+import { generateTranslation } from './generate-translation';
 
 /**
  *
- * Create a HTML element that calls DeepL API
+ * Create an HTML element that calls DeepL API
  *
  * @param {*} buttonData
- * @returns
+ * @param toast
+ * @returns HTMLButtonElement
  */
 
-export const createTranslateButton = (buttonData) => {
+export const createTranslateButton = (buttonData, toast) => {
   let button = null;
-  button = document.createElement("button");
-  button.setAttribute("class", "plugin-chatgpt-faq__button");
-  button.type = "button";
+  button = document.createElement('button');
+  button.setAttribute('class', 'plugin-translation-deepl__button');
+  button.type = 'button';
 
   button.onclick = () => {
-    const loadingClass = "plugin-chatgpt-faq__button--loading";
-    button.classList.add(loadingClass);
     button.disabled = true;
 
-    generateTranslation(buttonData)
+    generateTranslation(buttonData, toast)
       .catch((error) => {
-        console.log("Error translating content:", error);
+        console.error('Error translating content:', error);
+        toast.error('Error translating content');
       })
       .finally(() => {
-        button.classList.remove(loadingClass);
         button.disabled = false;
       });
   };

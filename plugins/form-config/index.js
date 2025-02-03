@@ -1,9 +1,8 @@
-import pluginInfo from "../../plugin-manifest.json";
-import { handleCoFormConfig } from "./co-form";
-import { handlePluginFormConfig } from "./plugin-form";
+import pluginInfo from '../../plugin-manifest.json';
+import { handleCoFormConfig } from './co-form';
+import { handlePluginFormConfig } from './plugin-form';
 
-export const handleFormFieldConfig = (data, getPluginSettings) => {
-  // TODO: clarify if we need this
+export const handleFormFieldConfig = (data, getPluginSettings, toast) => {
   if (
     data.contentType?.id === pluginInfo.id &&
     data.contentType?.nonCtdSchema &&
@@ -13,7 +12,7 @@ export const handleFormFieldConfig = (data, getPluginSettings) => {
   }
 
   const pluginSettings = getPluginSettings();
-  const parsedSettings = JSON.parse(pluginSettings || "{}");
+  const parsedSettings = JSON.parse(pluginSettings || '{}');
 
   const contentTypeSettings = parsedSettings?.config?.find(
     ({ content_type }) => content_type === data?.contentType?.name,
@@ -21,5 +20,5 @@ export const handleFormFieldConfig = (data, getPluginSettings) => {
 
   if (!contentTypeSettings) return;
 
-  handleCoFormConfig(data, contentTypeSettings);
+  handleCoFormConfig(data, contentTypeSettings, toast);
 };

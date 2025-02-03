@@ -5,16 +5,5 @@
   "version": "0.1.1",
   "repository": "https://github.com/flotiq/flotiq-ui-plugin-deepl",
   "url": "https://localhost:3053/index.js",
-  "permissions": [
-    {
-      "ctdName": "_plugin_settings",
-      "canUpdate": true,
-      "type": "CO"
-    },
-    {
-      "ctdName": "*",
-      "canRead": true,
-      "type": "CTD"
-    }
-  ]
+  "permissions": []
 }

@@ -1,21 +1,23 @@
 import {
   addElementToCache,
   getCachedElement,
-} from "../../../common/plugin-element-cache";
-import pluginInfo from "../../../plugin-manifest.json";
-import { createTranslateButton } from "./button";
+} from '../../../common/plugin-element-cache';
+import pluginInfo from '../../../plugin-manifest.json';
+import { createTranslateButton } from './button';
 
 /**
  * Add the translate button to
  * @param {*} param0
  * @param {*} contentTypeSettings
+ * @param toast
  */
 export const handleCoFormConfig = (
   { contentType, name, config, formik },
   contentTypeSettings,
+  toast,
 ) => {
   // Add the Magic Button on first field in the form
-  if (name == contentType.metaDefinition?.order[0]) {
+  if (name === contentType.metaDefinition?.order[0]) {
     const cacheKey = `${pluginInfo.id}-${contentType.name}-${name}`;
     const cacheEntry = getCachedElement(cacheKey);
 
@@ -32,7 +34,7 @@ export const handleCoFormConfig = (
         contentType,
       };
 
-      button = createTranslateButton(buttonData);
+      button = createTranslateButton(buttonData, toast);
       addElementToCache(button, cacheKey, buttonData);
     }
 

@@ -1,4 +1,7 @@
-import pluginInfo from "../plugin-manifest.json";
+import pluginInfo from '../plugin-manifest.json';
+
+export const validFieldsTypes = ['text', 'textarea', 'richtext'];
+const invalidKeys = ['__translations', 'slug'];
 
 export const getValidFields = (contentTypes) => {
   const fieldKeys = {};
@@ -9,13 +12,19 @@ export const getValidFields = (contentTypes) => {
     .map(({ name, label }) => ({ value: name, label }));
 
   (contentTypes || []).forEach(({ name, metaDefinition }) => {
-    fieldKeys[name] = metaDefinition?.order || [];
+    fieldKeys[name] = [];
     fieldOptions[name] = [];
 
     Object.entries(metaDefinition?.propertiesConfig || {}).forEach(
       ([key, value]) => {
-        if (key !== "__translations")
+        const inputType = value?.inputType;
+        if (
+          !invalidKeys.includes(key) &&
+          validFieldsTypes.includes(inputType)
+        ) {
           fieldOptions[name].push({ value: key, label: value.label });
+          fieldKeys[name].push(key);
+        }
       },
     );
   });
