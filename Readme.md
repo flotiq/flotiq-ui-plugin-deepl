@@ -15,6 +15,9 @@ This plugin provides automated translation using the DeepL API. It requires that
 6. Enter the list of available languages, including the original one (the one which you will use to enter the content). Please use 2-letter language codes, [as supported by DeepL](https://developers.deepl.com/docs/resources/supported-languages).
 7. Select the original language in the `Default language` field.
 
+> **Warning**: Translating slug fields can cause unidentified behavior
+
+
 ## Using the plugin
 
 1. Once the plugin is configured - go to the configured Content Type and edit one of the objects. 
