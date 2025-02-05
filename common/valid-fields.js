@@ -1,6 +1,6 @@
 import pluginInfo from '../plugin-manifest.json';
 
-export const validFieldsTypes = ['text', 'textarea', 'richtext'];
+const validFieldsTypes = ['text', 'textarea', 'richtext'];
 const invalidKeys = ['__translations', 'slug'];
 
 export const getValidFields = (contentTypes) => {

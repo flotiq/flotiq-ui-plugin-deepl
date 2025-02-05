@@ -45,7 +45,7 @@ const getMultilingualConfig = (settings, toast) => {
 
   if (!multilingualSettingsStr) {
     // TODO: add dependency on the Multilingual plugin
-    toast.error('Multilingual plugin settings not found');
+    toast.error(i18n.t('MultilingualConfigError'));
     throw new Error('Multilingual plugin settings not found');
   }
 

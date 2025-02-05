@@ -84,7 +84,7 @@ export const getSchema = (contentTypes) => {
             ],
             propertiesConfig: {
               api_key: {
-                label: i18n.t('DeepL API Key'),
+                label: i18n.t('DeeplApiKey'),
                 unique: false,
                 helpText: '',
                 inputType: 'text',

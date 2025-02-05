@@ -1,4 +1,5 @@
 import { generateTranslation } from './generate-translation';
+import i18n from '../../../i18n';
 
 /**
  *
@@ -21,7 +22,7 @@ export const createTranslateButton = (buttonData, toast) => {
     generateTranslation(buttonData, toast)
       .catch((error) => {
         console.error('Error translating content:', error);
-        toast.error('Error translating content');
+        toast.error(i18n.t('TranslationError'));
       })
       .finally(() => {
         button.disabled = false;
