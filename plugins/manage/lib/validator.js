@@ -1,4 +1,4 @@
-import i18n from "../../../i18n";
+import i18n from '../../../i18n';
 
 const addToErrors = (errors, index, field, error) => {
   if (!errors.config) errors.config = [];
@@ -12,26 +12,26 @@ export const getValidator = (fieldKeys) => {
 
     values.config?.forEach((ctdConfig, index) => {
       const requiredFields = [
-        "content_type",
-        "default_language",
-        "languages",
-        "fields",
+        'content_type',
+        'default_language',
+        'languages',
+        'fields',
       ];
 
       for (const field of requiredFields) {
         const value = ctdConfig[field];
         if (!value || (Array.isArray(value) && !value.length)) {
-          addToErrors(errors, index, "field", i18n.t("FieldRequired"));
+          addToErrors(errors, index, 'field', i18n.t('FieldRequired'));
         }
       }
 
       if (ctdConfig.languages?.length < 2) {
-        addToErrors(errors, index, "languages", i18n.t("MinLanguages"));
+        addToErrors(errors, index, 'languages', i18n.t('MinLanguages'));
       }
 
       (ctdConfig.fields || []).map((field) => {
         if (!(fieldKeys[ctdConfig.content_type] || []).includes(field)) {
-          addToErrors(errors, index, "fields", i18n.t("WrongField"));
+          addToErrors(errors, index, 'fields', i18n.t('WrongField'));
         }
       });
     });

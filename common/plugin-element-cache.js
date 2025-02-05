@@ -13,14 +13,14 @@ export const addElementToCache = (element, key, data = {}) => {
   if (element.addEventListener) {
     let detachTimeoutId;
 
-    element.addEventListener("flotiq.attached", () => {
+    element.addEventListener('flotiq.attached', () => {
       if (detachTimeoutId) {
         clearTimeout(detachTimeoutId);
         detachTimeoutId = null;
       }
     });
 
-    element.addEventListener("flotiq.detached", () => {
+    element.addEventListener('flotiq.detached', () => {
       detachTimeoutId = setTimeout(() => {
         removeRoot(key);
       }, 50);
