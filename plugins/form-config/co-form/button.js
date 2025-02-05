@@ -22,7 +22,7 @@ export const createTranslateButton = (buttonData, toast) => {
     generateTranslation(buttonData, toast)
       .catch((error) => {
         console.error('Error translating content:', error);
-        toast.error(i18n.t('TranslationError'));
+        toast.error(i18n.t('TranslationError'), { duration: 5000 });
       })
       .finally(() => {
         button.disabled = false;

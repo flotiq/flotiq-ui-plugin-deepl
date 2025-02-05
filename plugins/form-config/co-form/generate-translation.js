@@ -45,8 +45,8 @@ const getMultilingualConfig = (settings, toast) => {
 
   if (!multilingualSettingsStr) {
     // TODO: add dependency on the Multilingual plugin
-    toast.error(i18n.t('MultilingualConfigError'));
-    throw new Error('Multilingual plugin settings not found');
+    toast.error(i18n.t('MultilingualConfigError'), { duration: 5000 });
+    throw new Error('MultilingualConfigError');
   }
 
   /**
@@ -101,5 +101,5 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
       formik.setFieldTouched(`__translations[${languageIndex}].${field}`, true);
     }
   }
-  toast.success(i18n.t('Success'));
+  toast.success(i18n.t('Success'), { duration: 5000 });
 };
