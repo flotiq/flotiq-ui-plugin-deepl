@@ -74,6 +74,13 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
     fieldValues[field] = formik.values[field];
   }
 
+  const languages = [];
+  for (const translation of formik.values.__translations){
+    languages.push(translation.__language);
+  }
+
+  
+
   const { multilingualLanguages } = getMultilingualConfig(settings, toast);
 
   /**
@@ -83,7 +90,7 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
    */
 
   for (const language of settings.languages) {
-    const languageIndex = multilingualLanguages.indexOf(language.toLowerCase());
+    const languageIndex = languages.indexOf(language.toLowerCase());
     if (languageIndex === -1) {
       continue;
     }
@@ -94,10 +101,12 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
         value,
         language,
       );
+      
       await formik.setFieldValue(
         `__translations[${languageIndex}].${field}`,
         translatedValue,
       );
+      
       formik.setFieldTouched(`__translations[${languageIndex}].${field}`, true);
     }
   }
