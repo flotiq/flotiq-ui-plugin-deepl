@@ -30,39 +30,6 @@ const getTranslationForContent = async (apiKey, content, targetLang) => {
 };
 
 /**
- *
- * Parse the plugin settings to find the default language
- * and the order of languages.
- *
- * @param {*} settings
- * @param toast
- * @returns
- */
-const getMultilingualConfig = (settings, toast) => {
-  const multilingualSettingsStr = window.FlotiqPlugins.getPluginSettings(
-    'flotiq.multilingual',
-  );
-
-  if (!multilingualSettingsStr) {
-    // TODO: add dependency on the Multilingual plugin
-    toast.error(i18n.t('MultilingualConfigError'), { duration: 5000 });
-    throw new Error('MultilingualConfigError');
-  }
-
-  /**
-   * Align the order of languages in the DeepL plugin with the Multilingual plugin
-   */
-  const multilingualConfig = JSON.parse(multilingualSettingsStr);
-
-  const defaultLanguage = multilingualConfig.default_language;
-  const multilingualLanguages = multilingualConfig.languages
-    .filter((lang) => lang !== defaultLanguage)
-    .map((lang) => lang.toLowerCase());
-
-  return { defaultLanguage, multilingualLanguages };
-};
-
-/**
  * Use the DeepL API to translate the content of the form fields
  * @param {*} param0
  * @param toast
@@ -78,10 +45,6 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
   for (const translation of formik.values.__translations){
     languages.push(translation.__language);
   }
-
-  
-
-  const { multilingualLanguages } = getMultilingualConfig(settings, toast);
 
   /**
    * For each language that the plugin is configured to translate to,
