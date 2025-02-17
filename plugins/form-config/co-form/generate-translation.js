@@ -2,6 +2,21 @@ import axios from 'axios';
 import i18n from 'i18next';
 
 /**
+ * Check if multilingual plugin is added
+ * @param toast
+ */
+const checkDependencies = (toast) => {
+  const multilingualSettingsStr = window.FlotiqPlugins.getPluginSettings(
+    'flotiq.multilingual',
+  );
+
+  if (!multilingualSettingsStr) {
+    toast.error(i18n.t('MultilingualConfigError'), { duration: 5000 });
+    throw new Error('MultilingualConfigError');
+  }
+};
+
+/**
  * Helper function to translate content using the DeepL API
  * @param apiKey
  * @param {*} content
@@ -41,8 +56,10 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
     fieldValues[field] = formik.values[field];
   }
 
+  checkDependencies(toast);
+
   const languages = [];
-  for (const translation of formik.values.__translations){
+  for (const translation of formik.values.__translations) {
     languages.push(translation.__language);
   }
 
@@ -64,12 +81,12 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
         value,
         language,
       );
-      
+
       await formik.setFieldValue(
         `__translations[${languageIndex}].${field}`,
         translatedValue,
       );
-      
+
       formik.setFieldTouched(`__translations[${languageIndex}].${field}`, true);
     }
   }
