@@ -13,7 +13,6 @@ export const getSchema = (contentTypes) => {
     name: pluginInfo.id,
     label: pluginInfo.name,
     internal: false,
-    workflowId: 'generic',
     schemaDefinition: {
       type: 'object',
       allOf: [
