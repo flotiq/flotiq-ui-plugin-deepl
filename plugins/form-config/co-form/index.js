@@ -12,7 +12,7 @@ import { createTranslateButton } from './button';
  * @param toast
  */
 export const handleCoFormConfig = (
-  { contentType, name, config, formik },
+  { contentType, name, config, formik, initialData, formUniqueKey },
   contentTypeSettings,
   toast,
 ) => {
@@ -32,6 +32,8 @@ export const handleCoFormConfig = (
         settings: contentTypeSettings,
         formik,
         contentType,
+        initialData,
+        formUniqueKey,
       };
 
       button = createTranslateButton(buttonData, toast);
