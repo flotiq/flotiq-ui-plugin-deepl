@@ -23,21 +23,27 @@ const checkDependencies = (toast) => {
  * @param {*} targetLang
  * @returns
  */
-const getTranslationForContent = async (apiKey, content, targetLang) => {
-  const url = `https://api-free.deepl.com/v2/translate`;
+const getTranslations = async (apiKey, fieldValues, targetLang) => {
+  const url = `https://deepl.flotiq.com/`;
 
-  if (typeof content !== 'string') {
-    content = JSON.stringify(content);
-  }
-
-  const params = new URLSearchParams();
-  params.append('auth_key', apiKey);
-  params.append('text', content);
-  params.append('target_lang', targetLang);
+  const values = Object.values(fieldValues).map((value) =>
+    typeof value !== 'string' ? JSON.stringify(value) : value,
+  );
 
   try {
-    const response = await axios.post(url, params);
-    return response.data.translations[0].text;
+    const response = await axios.post(
+      url,
+      {
+        text: values,
+        target_lang: targetLang,
+      },
+      { headers: { Authorization: `DeepL-Auth-Key ${apiKey}` } },
+    );
+
+    return Object.keys(fieldValues).reduce((acc, field, index) => {
+      acc[field] = response.data.translations[index].text;
+      return acc;
+    }, {});
   } catch (error) {
     console.error('Error translating content:', error);
     throw new Error('Translation failed');
@@ -50,7 +56,10 @@ const getTranslationForContent = async (apiKey, content, targetLang) => {
  * @param toast
  */
 
-export const generateTranslation = async ({ settings, formik }, toast) => {
+export const generateTranslation = async (
+  { settings, formik, contentType, initialData, formUniqueKey },
+  toast,
+) => {
   const fieldValues = {};
   for (const field of settings.fields) {
     fieldValues[field] = formik.values[field];
@@ -58,37 +67,29 @@ export const generateTranslation = async ({ settings, formik }, toast) => {
 
   checkDependencies(toast);
 
-  const languages = [];
-  for (const translation of formik.values.__translations) {
-    languages.push(translation.__language);
-  }
-
   /**
    * For each language that the plugin is configured to translate to,
-   * get the translation of each field and set it in the formik values.
-   * Respect the order of languages in the Multilingual plugin settings.
+   * get the translation of each language 
+   * and send event to multilingual to update translations
    */
+  const languages = settings.languages.filter(
+    (lng) => lng !== settings.default_language,
+  );
 
-  for (const language of settings.languages) {
-    const languageIndex = languages.indexOf(language.toLowerCase());
-    if (languageIndex === -1) {
-      continue;
-    }
+  for (const language of languages) {
+    const values = await getTranslations(
+      settings.api_key,
+      fieldValues,
+      language,
+    );
 
-    for (const [field, value] of Object.entries(fieldValues)) {
-      const translatedValue = await getTranslationForContent(
-        settings.api_key,
-        value,
-        language,
-      );
-
-      await formik.setFieldValue(
-        `__translations[${languageIndex}].${field}`,
-        translatedValue,
-      );
-
-      formik.setFieldTouched(`__translations[${languageIndex}].${field}`, true);
-    }
+    window.FlotiqPlugins.run('flotiq-multilingual.translation::update', {
+      contentType,
+      language,
+      initialData,
+      values,
+      formUniqueKey,
+    });
   }
   toast.success(i18n.t('Success'), { duration: 5000 });
 };
