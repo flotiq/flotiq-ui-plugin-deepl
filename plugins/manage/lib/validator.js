@@ -21,7 +21,7 @@ export const getValidator = (fieldKeys) => {
       for (const field of requiredFields) {
         const value = ctdConfig[field];
         if (!value || (Array.isArray(value) && !value.length)) {
-          addToErrors(errors, index, 'field', i18n.t('FieldRequired'));
+          addToErrors(errors, index, 'fields', i18n.t('FieldRequired'));
         }
       }
 

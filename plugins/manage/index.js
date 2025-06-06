@@ -22,7 +22,7 @@ export const handleManageSchema = (data) => {
 
     formSchema = {
       options: {
-        disbaledBuildInValidation: true,
+        disabledBuildInValidation: true,
         onValidate: getValidator(validFields.fieldKeys),
       },
       schema: getSchema(ctds),

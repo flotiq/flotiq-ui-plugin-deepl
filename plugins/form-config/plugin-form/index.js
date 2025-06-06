@@ -8,14 +8,7 @@ export const handlePluginFormConfig = ({ name, config, formik }) => {
 
   if (index == null || !type) return;
 
-  if (type === 'content_type') {
-    config.onChange = (_, value) => {
-      if (value == null) formik.setFieldValue(name, '');
-      else formik.setFieldValue(name, value);
-
-      formik.setFieldValue(`config[${index}].fields`, '');
-    };
-  } else if (type === 'fields') {
+  if (type === 'fields') {
     const fieldOptions =
       getCachedElement(validFieldsCacheKey)?.element?.fieldOptions;
 
