@@ -3,7 +3,7 @@ import pluginInfo from '../plugin-manifest.json';
 import cssString from 'inline:./styles/style.css';
 import { handleManageSchema } from './manage';
 import { handleFormFieldConfig } from './form-config';
-import { handleFormFieldListenrsAdd } from './field-listeners';
+import { handleFormFieldListenersAdd } from './field-listeners';
 
 import i18n from '../i18n';
 import languages from '@cospired/i18n-iso-languages';
@@ -59,6 +59,6 @@ registerFn(pluginInfo, (handler, client, globals) => {
   );
 
   handler.on('flotiq.form.field.listeners::add', (data) =>
-    handleFormFieldListenrsAdd(data),
+    handleFormFieldListenersAdd(data),
   );
 });

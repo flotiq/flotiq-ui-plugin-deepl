@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0]
 ### Changed
-* plugin will emit `flotiq-multilingual.translation::update` event to update translation through multilinual plugin #26441
+* plugin will emit `flotiq-multilingual.translation::update` event to update translation through multilingual plugin #26441
 * DeepL API is now called through dedicated proxy #26715
 
 ### Fixed
-* plugin will no longer tranlsate default language values
+* plugin will no longer translate default language values

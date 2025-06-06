@@ -12,7 +12,7 @@ i18n.init({
         FieldRequired: 'Field is required',
         Fields: 'Content type fields to translate',
         Languages: 'Available languages',
-        MinLanguages: 'You have to add at least 2 langugages',
+        MinLanguages: 'You have to add at least 2 languages',
         Warning: 'Warning!',
         WrongField:
           'This field type is not supported or content type does not have this field',
