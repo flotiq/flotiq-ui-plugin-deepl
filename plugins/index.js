@@ -10,6 +10,9 @@ import languages from '@cospired/i18n-iso-languages';
 import enLocaleLng from '@cospired/i18n-iso-languages/langs/en.json';
 import plLocaleLng from '@cospired/i18n-iso-languages/langs/pl.json';
 
+enLocaleLng.languages.cnr = 'Montenegrin';
+plLocaleLng.languages.cnr = 'czarnogórski';
+
 languages.registerLocale(enLocaleLng);
 languages.registerLocale(plLocaleLng);
 

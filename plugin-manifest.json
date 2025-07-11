@@ -2,7 +2,7 @@
   "id": "flotiq.translation-deepl",
   "name": "DeepL Translation plugin",
   "description": "Use DeepL to translate your content. This plugin requires the Flotiq Multilingual plugin.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": "https://github.com/flotiq/flotiq-ui-plugin-deepl",
   "url": "https://localhost:3053/index.js",
   "permissions": []
