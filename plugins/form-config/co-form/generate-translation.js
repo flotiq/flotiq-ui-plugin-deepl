@@ -57,19 +57,19 @@ const getTranslations = async (apiKey, fieldValues, targetLang) => {
  */
 
 export const generateTranslation = async (
-  { settings, formik, contentType, initialData, formUniqueKey },
+  { settings, form, contentType, initialData, formUniqueKey },
   toast,
 ) => {
   const fieldValues = {};
   for (const field of settings.fields) {
-    fieldValues[field] = formik.values[field];
+    fieldValues[field] = form.getValue(field);
   }
 
   checkDependencies(toast);
 
   /**
    * For each language that the plugin is configured to translate to,
-   * get the translation of each language 
+   * get the translation of each language
    * and send event to multilingual to update translations
    */
   const languages = settings.languages.filter(
