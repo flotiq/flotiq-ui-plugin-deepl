@@ -12,7 +12,7 @@ import { createTranslateButton } from './button';
  * @param toast
  */
 export const handleCoFormConfig = (
-  { contentType, name, config, formik, initialData, formUniqueKey },
+  { contentType, name, config, form, initialData, formUniqueKey },
   contentTypeSettings,
   toast,
 ) => {
@@ -24,13 +24,13 @@ export const handleCoFormConfig = (
     let button = null;
 
     if (cacheEntry) {
-      // Update cache entry with new formik data
-      cacheEntry.data.formik = formik;
+      // Update cache entry with new form data
+      cacheEntry.data.form = form;
       button = cacheEntry.element;
     } else {
       const buttonData = {
         settings: contentTypeSettings,
-        formik,
+        form,
         contentType,
         initialData,
         formUniqueKey,
