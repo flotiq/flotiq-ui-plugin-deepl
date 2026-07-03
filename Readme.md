@@ -1,6 +1,10 @@
-[[_TOC_]]
+<a href="https://flotiq.com/">
+    <img src="https://editor.flotiq.com/fonts/fq-logo.svg" alt="Flotiq logo" title="Flotiq" align="right" height="60" />
+</a>
 
 # DeepL Translation Plugin
+
+> **Note**: This plugin is archived because its functionality has been moved to [Multilingual plugin](https://github.com/flotiq/flotiq-ui-plugin-multilingual). It remains available as an inspiration and reference for creating your own plugins.
 
 ## Overview
 This plugin provides automated translation using the DeepL API. It requires that the [Multilingual plugin](https://github.com/flotiq/flotiq-ui-plugin-multilingual) is installed and configured. It supports multiple languages and enables users to define and manage their own language sets.
